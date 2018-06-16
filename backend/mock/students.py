@@ -20,7 +20,10 @@ class Student:
         return str(self.to_json())
 
 
-students = ['student 1', 'student 2', 'student 3']
+student_1 = Student(0, "Student 1", "student 1 info")
+student_2 = Student(1, "Student 2", "student 2 info")
+
+students = [student_1, student_2]
 
 
 def init_students():

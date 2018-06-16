@@ -71,17 +71,11 @@ class Db:
         self.users.append(user)
         return ProcedureResult('add_user', True)
 
-    def get_user_by_id(self, value):
+    def get_user(self, value, by='id'):
         for u in self.users:
-            if u.id == value:
+            if u.get(by) == value:
                 return ProcedureResult('get_user', True, None, u)
-        return ProcedureResult('get_user', False, 'Пользователь с id ' + value + ' не найден')
-
-    def get_user_by_token(self, value):
-        for u in self.users:
-            if u.token == value:
-                return ProcedureResult('get_user', True, None, u)
-        return ProcedureResult('get_user', False, 'Пользователь с token ' + value + ' не найден')
+        return ProcedureResult('get_user', False, 'Пользователь с ' + by + '=' + value + ' не найден')
 
     def get_users(self):
         if len(self.users) > 0:
@@ -114,7 +108,7 @@ class Db:
 
     def get_student(self, id):
         for s in self.students:
-            if s.id == id:
+            if str(s.id) == str(id):
                 return ProcedureResult('get_student', True, None, s)
         return ProcedureResult('get_student', False, 'Студент с id ' + id + ' не найден')
 

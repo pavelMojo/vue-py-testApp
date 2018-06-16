@@ -8,6 +8,14 @@ class User:
         self.password = password
         self.token = token
 
+    def get(self, what):
+        if what == 'token':
+            return self.token
+        elif what == 'id':
+            return self.id
+        else:
+            return self
+
     def to_json(self):
         return {
             "id": self.id,
