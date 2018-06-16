@@ -8,6 +8,17 @@ class Student:
         self.info = info
         self.pic = pic
 
+    def to_json(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "info": self.info,
+            "pic": self.pic
+        }
+
+    def __repr__(self):
+        return str(self.to_json())
+
 
 students = ['student 1', 'student 2', 'student 3']
 

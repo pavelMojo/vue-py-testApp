@@ -1,72 +1,88 @@
-from flask import Flask, request, jsonify
+from flask import request, jsonify
 
-from request_utils import request_response
+from app import app
 from mock.data_base import Db
 from mock.users import User
 from mock.students import Student
 
-app = Flask(__name__)
 db = Db()
 
 
 @app.route('/register', methods=['POST'])
 def register():
     data = request.get_json()
-    new_user = User(db.users.count, data['login'], data['password'])
+    new_user = User(len(db.users), data['login'], data['password'])
     register_result = db.add_user(new_user)
 
-    if isinstance(register_result, str):
-        return request_response(register_result, True)
+    if not register_result.is_success:
+        return jsonify(register_result)
 
-    login()
+    return login()
 
 
 @app.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    print("data из login :", data)
     authorize_result = db.authorize_user(data['login'], data['password'])
 
-    if isinstance(authorize_result, str):
-        return request_response(authorize_result, True)
+    if not authorize_result.is_success:
+        return jsonify(authorize_result)
 
-    permission_result = db.add_token(authorize_result.id)
-
-    if isinstance(permission_result, str):
-        return request_response(authorize_result, True)
-
-    return request_response()
+    return jsonify(db.add_token(authorize_result.result.id))
 
 
 @app.route('/logout', methods=['POST'])
 def log_out():
     data = request.get_json()
-    authorize_result = db.authorize_user(data['login'], data['password'])
+    logout_result = db.remove_token(data['token'])
 
-    if isinstance(authorize_result, str):
-        return request_response(authorize_result, True)
+    return jsonify(logout_result)
 
-    logout_result = db.remove_token(authorize_result.token)
 
-    if isinstance(logout_result, str):
-        return request_response(logout_result, True)
-
-    return request_response()
-
-@app.route('/students', methods=['GET'])
-def get_students():
+# doesn't work db.get_user[key]
+@app.route('/leave', methods=['POST'])
+def delete_user():
     data = request.get_json()
-    print('обработчик запроса')
-    print('data', data)
-    print(db.students)
-    return request_response('/students response')
-    #если такой токен есть у пользователй, отправляем список студентов?
-    #если нет, отправляем ошибку
-    #return 'students: {...}'
+    a = data['token']
+    print(a)
+    b = db.get_user(1)
+    print(b)
+    user_result = db.get_user(data['token'], 'token')
+
+    if not user_result.is_success:
+        return jsonify(user_result)
+
+    return jsonify(db.remove_user(user_result.result.id))
+
+
+@app.route('/students/<token>', methods=['GET'])
+def get_students(token):
+    # token = token="1234567890"
+    # todo: take get parameter value by another way
+    check_result = db.check_token(token[7:-1])
+
+    if not check_result.is_success:
+        return jsonify(check_result)
+
+    return jsonify(db.get_students())
+
 
 @app.route('/student/<token>&<id>', methods=['GET'])
 def get_student(token, id):
-    return 'student: {...}'
+    # token = token="1234567890"
+    # todo: take get parameter value by another way
+    check_result = db.check_token(token[7:-1])
+
+    if not check_result.is_success:
+        return jsonify(check_result)
+
+    return jsonify(db.get_student(id[3:]))
+
+
+@app.route('/student', methods=['POST'])
+def add_student():
+    return 'success'
+
 
 @app.route('/student/<token>&<id>', methods=['DELETE'])
 def delete_student(token, id):
