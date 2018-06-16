@@ -24,7 +24,7 @@ class ProcedureResult:
 
 
 class Db:
-    active_tokens = []
+    active_tokens = ['69']
 
     def add_token(self, user_id):
         for u in self.users:
@@ -32,17 +32,13 @@ class Db:
                 token = str(time.time())
                 u.token = token
                 self.active_tokens.append(token)
-                return ProcedureResult('add_token', True, None, token)
+                return ProcedureResult('add_token', True, None, u)
         return ProcedureResult('add_token', False, 'Новый токен не был зарегистрирован. Скорее всего пользователь с user_id ' + user_id + ' не был найден')
 
     def check_token(self, token):
         for t in self.active_tokens:
-            print('t    ', t)
-            print('token', token)
             if t == token:
-                print('t = token')
                 return ProcedureResult('check_token', True)
-            else: print('t != token')
         return ProcedureResult('check_token', False, 'Токен ' + token + ' не зарегистрирован в приложении')
 
     def remove_token(self, token):
@@ -75,11 +71,17 @@ class Db:
         self.users.append(user)
         return ProcedureResult('add_user', True)
 
-    def get_user(self, value, by="id"):
+    def get_user_by_id(self, value):
         for u in self.users:
-            if u[by] == value:
+            if u.id == value:
                 return ProcedureResult('get_user', True, None, u)
-        return ProcedureResult('get_user', False, 'Пользователь с ' + by + '=' + value + ' не найден')
+        return ProcedureResult('get_user', False, 'Пользователь с id ' + value + ' не найден')
+
+    def get_user_by_token(self, value):
+        for u in self.users:
+            if u.token == value:
+                return ProcedureResult('get_user', True, None, u)
+        return ProcedureResult('get_user', False, 'Пользователь с token ' + value + ' не найден')
 
     def get_users(self):
         if len(self.users) > 0:

@@ -39,15 +39,10 @@ def log_out():
     return jsonify(logout_result)
 
 
-# doesn't work db.get_user[key]
 @app.route('/leave', methods=['POST'])
 def delete_user():
     data = request.get_json()
-    a = data['token']
-    print(a)
-    b = db.get_user(1)
-    print(b)
-    user_result = db.get_user(data['token'], 'token')
+    user_result = db.get_user_by_token(data['token'])
 
     if not user_result.is_success:
         return jsonify(user_result)

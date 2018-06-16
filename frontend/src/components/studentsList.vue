@@ -6,7 +6,7 @@
 
 <script>
 export default {
-    props: ['user', 'students', 'API'],
+    props: ['user', 'students', 'setUser', 'setStudents'],
     name: 'Main',
 }
 </script>

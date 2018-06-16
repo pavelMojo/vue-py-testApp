@@ -1,43 +1,55 @@
 <template>
     <v-flex class="user-form">
         <v-card class="user-form-card">
-                <div class="user-form-baner">
-                    <h1 class="user-form-title">{{ title }}</h1>
-                    <p class="user-form-title">{{ error }}</p>
-                </div>
-                <v-card-text>
-                    <v-form ref="form" v-model="valid" lazy-validation >
-                        <v-text-field
-                            v-model="login"
-                            :rules="loginRules"
-                            label="login"
-                            required
-                        ></v-text-field>
-                        <v-text-field
-                            v-model="password"
-                            :rules="passwordRules"
-                            label="password"
-                            required
-                        ></v-text-field>
-                        <v-btn
-                            class="user-form-submit-btn"
-                            :disabled="!valid"
-                            @click="onSubmit"
-                        >submit</v-btn>
-                    </v-form>
-                </v-card-text>
+            <div class="user-form-baner">
+                <h1 class="user-form-title">{{ type }}</h1>
+                <p v-if=error class="user-form-message">{{ error }}</p>
+            </div>
+            <v-card-text>
+                <v-form ref="form" v-model="valid" lazy-validation >
+                    
+                    <v-text-field
+                        v-model="login"
+                        :rules="loginRules"
+                        label="login"
+                        required
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="password"
+                        :rules="passwordRules"
+                        label="password"
+                        required
+                    ></v-text-field>
+
+                    <v-btn
+                        :disabled="!valid || !login.length || !password.length"
+                        @click="onSubmit"
+                    >{{ type }}</v-btn>                    
+                </v-form>
+            </v-card-text>
         </v-card>
     </v-flex>
 </template>
 
 <script>
+import api from './../API';
+
 export default {
-    props:['title', 'submit'],
-    name: 'UserForm',    
+    props:['type', 'setUser'],
+    name: 'UserForm',
+    watch: {
+        'type' (to, from) {
+            if(from !== to) {
+                this.error = undefined
+                this.login = ''
+                this.password = ''
+            } 
+        }
+    },
     data() {
         return {
             valid: true,
-            error: 'error mock',
+            error: undefined,
             login: '',
             loginRules: [
             v => !!v || 'Name is required',
@@ -51,10 +63,22 @@ export default {
         }   
     },
     methods:{
-        onSubmit(e) {
-            e.preventDefault();
-            const { login, password } = this;
-            this.submit({ login, password })
+        onSubmit() {
+            const { type, login, password, setToken } = this;
+
+            this.$http.post(type === 'Log in' ? api.login : api.register, { login, password }).then(
+                (response) => { 
+                    const { body: { isSuccess, message, result  } } = response
+                    if(isSuccess && typeof(result) === 'string')
+                        setUser(result)
+                    this.error = message;
+                    return;
+                },
+                (error) => { 
+                    this.error = 'global request or API error'; 
+                    return; 
+                }
+            )
         }
     }
 }
@@ -65,6 +89,7 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 20px auto;
 }
 .user-form-card{
     width: 400px;
@@ -72,14 +97,17 @@ export default {
 	box-shadow: 5px 6px 18px -3px #777
 }
 .user-form-baner{
-    height: 80px;
     background-color: #FEE140;
     background-image: linear-gradient(90deg, #FA709A 0%, #FEE140 100%);
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    flex-direction: column;
 }
 .user-form-title{
+    margin:16px;
     color: white;
+}
+.user-form-message{
+    color: white;
+    text-overflow: ellipsis;
 }
 </style>
