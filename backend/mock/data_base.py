@@ -16,7 +16,7 @@ class ProcedureResult:
             'procedure': self.procedure,
             'isSuccess': self.is_success,
             'message': self.message,
-            'result': self.result
+            'result': self.result,
         }
 
     def __repr__(self):
