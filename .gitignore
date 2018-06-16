@@ -1,0 +1,12 @@
+frontend/dist/*
+frontend/build/*
+frontend/node_modules/*
+frontend/package-lock.json
+
+### VisualStudioCode ###
+.vs/*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
