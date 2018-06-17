@@ -103,7 +103,7 @@ export default {
     &__add-btn{
         &-icon{
             display: inline-flex !important;
-            color: #FA709A !important;
+            color: rgb(134, 81, 255) !important;
         }
     }
 }
