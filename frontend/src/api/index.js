@@ -1,17 +1,17 @@
 const root = 'http://localhost:8080';
 
 export const procedures = {
-    register: '/register',
+    register: '/user',
     login:    '/login',
     logout:   '/logout',
-    leave:    '/leave',
+    leave:    '/user',
     users:    '/users',
     user:     '/user',
     students: '/students',
     student:  '/student'
 };
 
-export const pathes = {
+export const routs = {
     register: `${root}${procedures.register}`,
     login:    `${root}${procedures.login}`,
     logout:   `${root}${procedures.logout}`,
@@ -22,4 +22,4 @@ export const pathes = {
     student:  `${root}${procedures.student}`
 };
 
-export default pathes;
+export default routs;

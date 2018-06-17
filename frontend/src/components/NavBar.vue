@@ -1,24 +1,25 @@
 <template>
     <v-toolbar color="white" class="nav-bar">
-      <a class="nav-bar-login app-gradient" v-if="user.token">Привет, {{ user.login }}</a>
-      <router-link to='/' >Main</router-link>
-      <router-link to='/register' >Register</router-link>
-      <router-link to='/login'    >Log in</router-link>
-      <router-link to='/logout'   >Log out</router-link>
-      <router-link to='/leave' v-if="0"   >Delete account</router-link>
+        <a class="nav-bar-login app-gradient" v-if="user.token">Привет, {{ user.login }}</a>
+        <router-link to='/'         v-if="user.token">Main</router-link>
+        <router-link to='/register' v-if="!user.token">Register</router-link>
+        <router-link to='/logout'   v-if="user.token">Log out</router-link>
+        <router-link to='/login'    v-if="!user.token">Log in</router-link>
 
-      <v-menu offset-y>
+        <router-link to='/leave'    v-if="0">Delete account</router-link>
+
+        <v-menu offset-y>
         <v-btn slot="activator" class="app-gradient" dark>Test API call</v-btn>
         <v-list>
-          <template v-for="(procedure, index) in api">
+            <template v-for="(procedure, index) in api">
             <v-subheader v-if="procedure.section" :key="procedure.section">{{ procedure.section }}</v-subheader>
-            <v-list-tile v-if="procedure.name" :key="index" :disabled="procedure.type=='delete'" @click="callApi(procedure)">
-              <v-list-tile-title >{{ procedure.name }}</v-list-tile-title>
+            <v-list-tile v-if="procedure.name" :key="index" @click="callApi(procedure)">
+                <v-list-tile-title >{{ procedure.name }}</v-list-tile-title>
             </v-list-tile>
             <v-divider v-if="procedure.divider" :key="procedure.divider"></v-divider>
-          </template>
+            </template>
         </v-list>
-      </v-menu>
+        </v-menu>
     </v-toolbar>
 </template>
 
@@ -39,14 +40,9 @@ export default {
     methods:{
         callApi(procedure) {
             const show = (apiCallResult) => {
-                // ! call $router.push with params doesnt call watch in apiResult component 
-                // this.$router.push({ name: 'api', params: { apiCallResult: a }});
-
-                const excludeBodyText = (key, value) =>
-                    (typeof value === 'string' && key === 'bodyText') ? 
-                        undefined : value 
-        
-                alert(JSON.stringify(apiCallResult, excludeBodyText, 2));
+                // ! call $router.push( /api, params: { ... } doesnt call watch method
+                // ! in apiResult component if current page is /api
+                this.$router.push({ name: 'api', params: { apiCallResult } });
             }
   
             const { type, path, data } = procedure;
@@ -68,7 +64,7 @@ export default {
                     );
                     break;
                 default:
-                    throw `Not implement for type '${type}'`;
+                    alert(`TEST API CALL not implement for request type '${type.toUpperCase()}'`)
             }
         },
     }

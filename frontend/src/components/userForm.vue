@@ -44,7 +44,10 @@ export default {
                 this.login = ''
                 this.password = ''
             }
-            if(to === 'Log out') this.logOut();
+            if(to === 'Log out') {
+                this.logout();
+                return;
+            }
         }
     },
     data() {
@@ -89,13 +92,19 @@ export default {
                 }
             )
         },
-        logOut() {
+        logout() {
             this.$store.commit('user', {});
             this.$router.push('/');
         }
     },
     created() {        
-        if (this.user.token) this.$router.push('/');
+        if (this.user.token) {
+            if(this.type === 'Log out') {
+                this.logout();
+                return;
+            }
+            this.$router.push('/');
+        } 
     }
 }
 </script>

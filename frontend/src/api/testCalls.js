@@ -1,39 +1,39 @@
-import {  procedures, pathes } from './'
+import {  procedures, routs } from './'
 
 export const testCalls = [
     {
         section:"POST",
     },
     {
-        type: 'post',
-        name: procedures.register,
-        path: pathes.register,
-        data: {
-            login: "unic login",
-            password: "sicret password"
-        }
-    },
-    {
         type: 'post',        
         name: procedures.login,
-        path: pathes.login,
+        path: routs.login,
         data: {
-            login: "unic login",
-            password: "sicret password"
+            login: "login",
+            password: "password"
         }
     },
     {
         type: 'post',
         name: procedures.logout,
-        path: pathes.logout,
+        path: routs.logout,
         data: {
             token: "69",
         }
     },
     {
         type: 'post',
+        name: procedures.register,
+        path: routs.register,
+        data: {
+            login: "unique login",
+            password: "secret password"
+        }
+    },
+    {
+        type: 'post',
         name: procedures.student,
-        path: pathes.student,
+        path: routs.student,
         data: {
             name: "student name",
             info: "student info"
@@ -45,16 +45,25 @@ export const testCalls = [
     },
     {
         type: 'get',
+        name: procedures.user,
+        path: routs.user,
+        data: {
+            token: "69",
+            id: 0
+        }
+    },
+    {
+        type: 'get',
         name: procedures.users,
-        path: pathes.users,
+        path: routs.users,
         data: {
             token: "69",
         }
     },
     {
         type: 'get',
-        name: procedures.user,
-        path: pathes.user,
+        name: procedures.student,
+        path: routs.student,
         data: {
             token: "69",
             id: 0
@@ -63,18 +72,9 @@ export const testCalls = [
     {
         type: 'get',
         name: procedures.students,
-        path: pathes.students,
+        path: routs.students,
         data: {
             token: "69",
-        }
-    },
-    {
-        type: 'get',
-        name: procedures.student,
-        path: pathes.student,
-        data: {
-            token: "69",
-            id: 0
         }
     },
     {
@@ -83,16 +83,8 @@ export const testCalls = [
     },
     {
         type: 'delete',
-        name: procedures.leave,
-        path: pathes.leave,
-        data: {
-            token: "69",
-        }
-    },
-    {
-        type: 'delete',
         name: procedures.user,
-        path: pathes.user,
+        path: routs.user,
         data: {
             token: "69",
             id: 0
@@ -101,7 +93,7 @@ export const testCalls = [
     {
         type: 'delete',
         name: procedures.student,
-        path: pathes.student,
+        path: routs.student,
         data: {
             token: "69",
             id: 0

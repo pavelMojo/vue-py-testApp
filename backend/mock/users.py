@@ -28,12 +28,13 @@ class User:
         return str(self.to_json())
 
 
-# account with token fo call test API request
+# account with token fo call test API GET request
 user_1 = User(0, "Admin", "adminPassword", "69")
 # account to quick login
 user_2 = User(1, "1", "1")
+user_3 = User(2, "login", "password")
 
-users = [user_1, user_2]
+users = [user_1, user_2, user_3]
 
 
 def init_users():

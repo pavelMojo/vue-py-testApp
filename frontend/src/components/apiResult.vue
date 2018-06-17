@@ -7,7 +7,7 @@
 <script>
 export default {
     props:['apiCallResult'],
-    name: 'apiCall',
+    name: 'apiResult',
     watch: {
         'apiCallResult' (to, from) {
             debugger
@@ -20,13 +20,9 @@ export default {
         });
     }, 
     created() {
-        debugger
         const { apiCallResult } = this;
         if (!apiCallResult) return;
         
-        // forbid manual transition to this page. Not necessary
-        //if (apiCallResult === undefined) this.$router.push('/');
-
         const excludeBodyText = (key, value) =>
             (typeof value === 'string' && key === 'bodyText') ? 
                 undefined : value 
@@ -38,7 +34,9 @@ export default {
 
 <style lang="scss">
 .api-result{
-    padding-left: 30px;
     text-align: start;
+    overflow: auto;
+    margin: 0 auto auto 0;
+    padding: 24px;
 }
 </style>

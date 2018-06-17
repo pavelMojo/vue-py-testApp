@@ -4,6 +4,7 @@ import Router from 'vue-router'
 import StudentsList from '@/components/StudentsList';
 import UserForm from '@/components/UserForm';
 import ApiResult from '@/components/ApiResult';
+import NotFoundComponent from '@/components/NotFound';
 
 Vue.use(Router)
 
@@ -43,7 +44,8 @@ export default new Router({
       props: {
         type: 'Log out',
       }
-    }
+    },
+    { path: '*', component: NotFoundComponent }
   ],
   mode: 'history'
 });

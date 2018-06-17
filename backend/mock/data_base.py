@@ -29,10 +29,13 @@ class Db:
     def add_token(self, user_id):
         for u in self.users:
             if u.id == user_id:
-                token = str(time.time())
-                u.token = token
-                self.active_tokens.append(token)
-                return ProcedureResult('add_token', True, None, u)
+                if u.token is None:
+                    token = str(time.time())
+                    u.token = token
+                    self.active_tokens.append(token)
+                    return ProcedureResult('add_token', True, None, u)
+                else:
+                    return ProcedureResult('add_token', False, 'У пользователя ' + u.login + ' уже есть активный токен')
         return ProcedureResult('add_token', False, 'Новый токен не был зарегистрирован. Скорее всего пользователь с user_id ' + user_id + ' не был найден')
 
     def check_token(self, token):

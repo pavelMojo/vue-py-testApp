@@ -49,6 +49,7 @@ a{
         min-height: 75px;
         display: flex;
         flex-direction: column;
+        position: relative;
         &-title{
             color: white;
             margin:16px;
