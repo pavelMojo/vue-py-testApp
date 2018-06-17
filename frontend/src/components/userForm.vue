@@ -1,7 +1,7 @@
 <template>
     <v-flex class="user-form">
         <v-card class="user-form-card">
-            <div class="user-form-baner">
+            <div class="user-form-baner gradient-background">
                 <h1 class="user-form-title">{{ type }}</h1>
                 <p v-if=error class="user-form-message">{{ error }}</p>
             </div>
@@ -32,11 +32,13 @@
 </template>
 
 <script>
-import api from './../API';
+import api from './../api';
 
 export default {
-    props:['type', 'setUser'],
     name: 'UserForm',
+    props: {
+        type: String
+    },
     watch: {
         'type' (to, from) {
             if(from !== to) {
@@ -62,6 +64,11 @@ export default {
             ],
         }   
     },
+    computed:{
+        user() {
+            return this.$store.getters.user;
+        }
+    },
     methods:{
         onSubmit() {
             const { type, login, password, setUser } = this;
@@ -69,10 +76,8 @@ export default {
                 (response) => { 
                     const { body: { isSuccess, message, result  } } = response
                     if(isSuccess && typeof(result === 'object')) {
-                        setUser(result)
+                        this.$store.commit('user', result)
                         this.$router.push(name='/');
-                        // нужен ли тут return?
-                        debugger
                         return
                     }
 
@@ -85,6 +90,10 @@ export default {
                 }
             )
         }
+    },
+    created() {
+        const { token } = this.$store.getters.user;
+        if (token) this.$router.push('/');
     }
 }
 </script>
@@ -101,8 +110,6 @@ export default {
 	box-shadow: 4px 6px 20px -5px #777
 }
 .user-form-baner{
-    background-color: #FEE140;
-    background-image: linear-gradient(90deg, #FA709A 0%, #FEE140 100%);
     display: flex;
     flex-direction: column;
 }

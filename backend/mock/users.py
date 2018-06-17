@@ -28,8 +28,10 @@ class User:
         return str(self.to_json())
 
 
+# account with token fo call test API request
 user_1 = User(0, "Admin", "adminPassword", "69")
-user_2 = User(1, "User 2", "user 2 password")
+# account to quick login
+user_2 = User(1, "1", "1")
 
 users = [user_1, user_2]
 

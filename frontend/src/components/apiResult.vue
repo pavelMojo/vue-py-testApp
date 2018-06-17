@@ -10,6 +10,7 @@ export default {
     name: 'apiCall',
     watch: {
         'apiCallResult' (to, from) {
+            debugger
             if(from !== to) this.requestJson = ''
         }
     },
@@ -17,13 +18,14 @@ export default {
         return({
             requestJson: 'API not call yet. \n\tChoose any option from "TEST API CALL" menu on top'
         });
-    },
+    }, 
     created() {
+        debugger
         const { apiCallResult } = this;
         if (!apiCallResult) return;
         
         // forbid manual transition to this page. Not necessary
-        // if (apiCallResult === undefined) this.$router.push(name='/');
+        //if (apiCallResult === undefined) this.$router.push('/');
 
         const excludeBodyText = (key, value) =>
             (typeof value === 'string' && key === 'bodyText') ? 

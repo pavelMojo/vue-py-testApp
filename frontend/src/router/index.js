@@ -1,11 +1,11 @@
+import Vue from 'vue';
 import Router from 'vue-router'
 
-import StudentsList from '@/components/studentsList';
-import UserForm from '@/components/userForm';
-import ApiResult from '@/components/apiResult';
+import StudentsList from '@/components/StudentsList';
+import UserForm from '@/components/UserForm';
+import ApiResult from '@/components/ApiResult';
 
-// import App from './../App';
-// const { setUser, setStudents } = App.methods;
+Vue.use(Router)
 
 export default new Router({
   routes: [
@@ -13,9 +13,6 @@ export default new Router({
       path: '/',
       name: 'main',
       component: StudentsList,
-      props: {
-        //setStudents
-      }
     },
     {
       path: '/api',
@@ -29,7 +26,6 @@ export default new Router({
       component: UserForm,
       props: {
         type: 'Log in',
-        //setUser
       }
     },
     {
@@ -38,7 +34,6 @@ export default new Router({
       component: UserForm,
       props: {
         type: 'Register',
-        //setUser
       }
     }
   ],

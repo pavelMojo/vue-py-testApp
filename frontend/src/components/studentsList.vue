@@ -6,7 +6,14 @@
 
 <script>
 export default {
-    props: ['user', 'students', 'setUser', 'setStudents'],
-    name: 'Main',
+    name: 'Main',    
+    computed:{
+        user() {
+            return this.$store.getters.user;
+        }
+    },
+    created() {
+        if (!this.user.token) this.$router.push(name="login");
+    }
 }
 </script>

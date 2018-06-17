@@ -4,16 +4,17 @@ import Router from 'vue-router'
 import vueResource from 'vue-resource'
 import 'vuetify/dist/vuetify.min.css'
 
-import router from './router'
+import router from './router';
 import App from './App';
- 
+import store from './store'
+
 Vue.use(Vuetify)
-Vue.use(Router)
 Vue.use(vueResource)
 
 new Vue({
   el: '#app',
   router,
-  components: { App, },
+  store,
+  components: { App },
   template: '<App/>'
 })
