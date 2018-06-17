@@ -36,7 +36,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .api-result{
     padding-left: 30px;
     text-align: start;

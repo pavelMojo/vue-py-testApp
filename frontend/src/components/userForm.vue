@@ -1,34 +1,32 @@
 <template>
-    <v-flex class="user-form">
-        <v-card class="user-form-card">
-            <div class="user-form-baner gradient-background">
-                <h1 class="user-form-title">{{ type }}</h1>
-                <p v-if=error class="user-form-message">{{ error }}</p>
-            </div>
-            <v-card-text>
-                <v-form ref="form" v-model="valid" lazy-validation >
-                    
-                    <v-text-field
-                        v-model="login"
-                        :rules="loginRules"
-                        label="login"
-                        required
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="password"
-                        :rules="passwordRules"
-                        label="password"
-                        required
-                    ></v-text-field>
+    <v-card class="app-card">
+        <div class="app-card-header app-gradient">
+            <h1 class="app-card-header-title">{{ type }}</h1>
+            <p v-if=error class="app-card-header-subtitle">{{ error }}</p>
+        </div>
+        <v-card-text>
+            <v-form ref="form" v-model="valid" lazy-validation >
 
-                    <v-btn
-                        :disabled="!valid || !login.length || !password.length"
-                        @click="onSubmit"
-                    >{{ type }}</v-btn>                    
-                </v-form>
-            </v-card-text>
-        </v-card>
-    </v-flex>
+                <v-text-field
+                    v-model="login"
+                    :rules="loginRules"
+                    label="login"
+                    required
+                ></v-text-field>
+                <v-text-field
+                    v-model="password"
+                    :rules="passwordRules"
+                    label="password"
+                    required
+                ></v-text-field>
+
+                <v-btn
+                    :disabled="!valid || !login.length || !password.length"
+                    @click="onSubmit"
+                >{{ type }}</v-btn>                    
+            </v-form>
+        </v-card-text>
+    </v-card>
 </template>
 
 <script>
@@ -45,7 +43,8 @@ export default {
                 this.error = undefined
                 this.login = ''
                 this.password = ''
-            } 
+            }
+            if(to === 'Log out') this.logOut();
         }
     },
     data() {
@@ -89,36 +88,14 @@ export default {
                     return; 
                 }
             )
+        },
+        logOut() {
+            this.$store.commit('user', {});
+            this.$router.push('/');
         }
     },
-    created() {
-        const { token } = this.$store.getters.user;
-        if (token) this.$router.push('/');
+    created() {        
+        if (this.user.token) this.$router.push('/');
     }
 }
 </script>
-
-<style>
-.user-form{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.user-form-card{
-    width: 400px;
-    border-radius: 2px 2px 10px 10px;
-	box-shadow: 4px 6px 20px -5px #777
-}
-.user-form-baner{
-    display: flex;
-    flex-direction: column;
-}
-.user-form-title{
-    margin:16px;
-    color: white;
-}
-.user-form-message{
-    color: white;
-    text-overflow: ellipsis;
-}
-</style>

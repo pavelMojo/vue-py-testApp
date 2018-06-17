@@ -35,6 +35,14 @@ export default new Router({
       props: {
         type: 'Register',
       }
+    },
+    {
+      path: '/logout',
+      name: 'logout',
+      component: UserForm,
+      props: {
+        type: 'Log out',
+      }
     }
   ],
   mode: 'history'

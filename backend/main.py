@@ -72,7 +72,8 @@ def get_user(token, id):
     if not check_result.is_success:
         return jsonify(check_result)
 
-    return jsonify(db.get_user(id[4:-2]))
+    return jsonify(db.get_user(int(id[4:-2])))
+
 
 @app.route('/students/<string:token>', methods=['GET'])
 def get_students(token):

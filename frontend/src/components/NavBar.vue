@@ -1,14 +1,14 @@
 <template>
     <v-toolbar color="white" class="nav-bar">
-      <a class="nav-bar-login"    v-if="user.token">Привет, {{ user.login }}</a>
+      <a class="nav-bar-login app-gradient" v-if="user.token">Привет, {{ user.login }}</a>
       <router-link to='/' >Main</router-link>
       <router-link to='/register' >Register</router-link>
       <router-link to='/login'    >Log in</router-link>
       <router-link to='/logout'   >Log out</router-link>
-      <router-link to='/leave'    >Delete account</router-link>
+      <router-link to='/leave' v-if="0"   >Delete account</router-link>
 
       <v-menu offset-y>
-        <v-btn slot="activator" class="gradient-background" dark>Test API call</v-btn>
+        <v-btn slot="activator" class="app-gradient" dark>Test API call</v-btn>
         <v-list>
           <template v-for="(procedure, index) in api">
             <v-subheader v-if="procedure.section" :key="procedure.section">{{ procedure.section }}</v-subheader>
@@ -75,25 +75,24 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 .nav-bar{
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   margin-bottom: 30px;
+  &-login{
+    font-size: 200%;
+    text-transform: uppercase;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-right: auto;
+    cursor: default !important;
+  }
 }
+// overwrite buildin style to show user name on the left of nav-bar
 .toolbar__content{
     width: 100%;
     justify-content: flex-end;
-}
-.nav-bar-login{
-    font-size: 200%;
-    text-transform: uppercase;
-    background: linear-gradient(90deg, #FA709A 0%, #FEE140 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    cursor: default !important;
-    color: #FA709A;
-    margin-right: auto;
 }
 </style>
