@@ -1,8 +1,8 @@
 <template>
-    <v-card class="app-card">
-        <div class="app-card-header app-gradient">
-            <h1 class="app-card-header-title">{{ type }}</h1>
-            <p v-if=error class="app-card-header-subtitle">{{ error }}</p>
+    <v-card class="app__card">
+        <div class="app__card-header app__gradient">
+            <h1 class="app__card-header-title">{{ type }}</h1>
+            <p v-if=error class="app__card-header-subtitle">{{ error }}</p>
         </div>
         <v-card-text>
             <v-form ref="form" v-model="valid" lazy-validation >
@@ -108,3 +108,9 @@ export default {
     }
 }
 </script>
+
+<style lang="scss">
+.input-group--dirty, .primary--text {
+    color: rgba($color: black, $alpha: 0.3) !important;
+}
+</style>

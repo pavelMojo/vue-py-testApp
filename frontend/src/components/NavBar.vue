@@ -1,6 +1,6 @@
 <template>
     <v-toolbar color="white" class="nav-bar">
-        <a class="nav-bar-login app-gradient" v-if="user.token">Привет, {{ user.login }}</a>
+        <a class="nav-bar__login app__gradient" v-if="user.token">Привет, {{ user.login }}</a>
         <router-link to='/'         v-if="user.token">Main</router-link>
         <router-link to='/register' v-if="!user.token">Register</router-link>
         <router-link to='/logout'   v-if="user.token">Log out</router-link>
@@ -9,7 +9,7 @@
         <router-link to='/leave'    v-if="0">Delete account</router-link>
 
         <v-menu offset-y>
-        <v-btn slot="activator" class="app-gradient" dark>Test API call</v-btn>
+        <v-btn slot="activator" class="app__gradient" dark>Test API call</v-btn>
         <v-list>
             <template v-for="(procedure, index) in api">
             <v-subheader v-if="procedure.section" :key="procedure.section">{{ procedure.section }}</v-subheader>
@@ -77,7 +77,7 @@ export default {
   flex-direction: row;
   justify-content: flex-end;
   margin-bottom: 30px;
-  &-login{
+  &__login{
     font-size: 200%;
     text-transform: uppercase;
     -webkit-background-clip: text;

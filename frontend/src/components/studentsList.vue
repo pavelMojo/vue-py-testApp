@@ -1,26 +1,28 @@
 <template>
-    <v-card class="app-card">
-        <div class="app-card-header app-gradient">
-            <h1 class="app-card-header-title">{{ title }}</h1>
-            <p v-if=error class="app-card-header-subtitle">{{ error }}</p>
-            <v-btn class="student-add-btn"
+    <v-card class="app__card">
+        <div class="app__card-header app__gradient">
+            <h1 class="app__card-header-title">{{ title }}</h1>
+            <p v-if=error class="app__card-header-subtitle">{{ error }}</p>
+            <v-btn class="student__add-btn"
                 absolute bottom right fab @click="addRecordsToStudents">
-              <v-icon class="student-add-btn-icon" large >add</v-icon>
+              <v-icon class="student__add-btn-icon" large >add</v-icon>
             </v-btn>
         </div>
-        <v-card-text>
-            <template v-for="(student, index) in students">
-                <div class="student" :key="index">
-                    <v-avatar :tile="true" :size="80" class="student-pic" >
-                        <img :src="student.pic">
-                    </v-avatar>
-                    <v-list-tile-content>
-                        <h2 v-html="student.name" class="student-name"></h2>
-                        <p class="student-info" v-html="student.info"></p>
-                    </v-list-tile-content>
-                </div>
-            </template>
-        </v-card-text>
+        <div class="students">
+            <v-card-text >
+                <template v-for="(student, index) in students">
+                    <div class="student" :key="index">
+                        <v-avatar :tile="true" :size="80" class="student__pic" >
+                            <img :src="student.pic">
+                        </v-avatar>
+                        <v-list-tile-content>
+                            <h2 v-html="student.name" class="student__name"></h2>
+                            <p v-html="student.info"></p>
+                        </v-list-tile-content>
+                    </div>
+                </template>
+            </v-card-text>
+        </div>
     </v-card>
 </template>
 
@@ -56,7 +58,7 @@ export default {
             students.forEach((s, i) => { newStudents.push(s); newStudents.push(generatedStudents[i]) })
 
             this.$store.commit('students', newStudents);
-            this.error = 'добавленные по клику записи были сгенерированы на клиенте. на сервере их нет';
+            this.error = 'добавленные по клику записи были сгенерированы и добавлены только на клиенте';
         }
     },
     created() {
@@ -83,21 +85,22 @@ export default {
 </script>
 
 <style lang="scss">
+.students{
+    overflow: auto;
+}
 .student{
     display: flex;
     margin-bottom: 16px;
     &:last-child{
         margin-bottom: 0;
     }
-    &-name{
+    &__name{
         white-space: nowrap;
     }
-    &-info{
-    }
-    &-pic{
+    &__pic{
         margin-right: 16px;
     }
-    &-add-btn{
+    &__add-btn{
         &-icon{
             display: inline-flex !important;
             color: #FA709A !important;

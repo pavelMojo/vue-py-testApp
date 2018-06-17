@@ -1,5 +1,5 @@
 <template>
-    <pre class='api-result'>
+    <pre class='api__result'>
         {{ requestJson }}
     </pre>
 </template>
@@ -33,10 +33,12 @@ export default {
 </script>
 
 <style lang="scss">
-.api-result{
+.api{
+    &__result{
     text-align: start;
     overflow: auto;
     margin: 0 auto auto 0;
     padding: 24px;
+}
 }
 </style>

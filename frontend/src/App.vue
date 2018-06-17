@@ -1,7 +1,7 @@
 <template>
   <v-app id="app">
     <app-nav-bar/>
-    <v-flex class="app-flex">
+    <v-flex class="app__flex">
       <router-view />
     </v-flex>
   </v-app>
@@ -30,20 +30,20 @@ a{
   margin: auto 20px;
 }
 .app{
-  &-flex{
+  &__flex{
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  &-gradient{
+  &__gradient{
     background-color: #FEE140;
     background-image: linear-gradient(90deg, #FA709A 0%, #FEE140 100%);
   }
-  &-card{
+  &__card{
     width: 400px;
     max-height: 80vh;
-    overflow: auto;
     border-radius: 2px 2px 10px 10px;
+    overflow: auto;
     box-shadow: 4px 6px 20px -5px #777;
     &-header{
         min-height: 75px;
@@ -60,5 +60,23 @@ a{
         }
     }
   }
+}
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: rgba(0,0,0,0.1);
+}
+::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgba(0,0,0,0.2);
+}
+::-webkit-scrollbar-thumb:hover{
+  	background: rgba(0,0,0,0.4);
+}
+::-webkit-scrollbar-thumb:active{
+  	background: rgba(0,0,0,.9);
 }
 </style>
