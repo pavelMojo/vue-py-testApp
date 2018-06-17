@@ -9,7 +9,7 @@
       <router-link to='/leave'    v-if="user.token">Delete account</router-link>
 
       <v-menu offset-y>
-        <v-btn slot="activator" class="user-form-baner" dark>Test API call</v-btn>
+        <v-btn slot="activator" class="nav-bar-api-btn" dark>Test API call</v-btn>
         <v-list>
           <template v-for="(procedure, index) in api">
             <v-subheader v-if="procedure.section" :key="procedure.section">{{ procedure.section }}</v-subheader>
@@ -35,9 +35,7 @@ export default {
     return {
       api: testCalls,
       user: {},
-      //setUser: this.setUser,
       students: [],
-      //setStudents: this.setStudents 
     }
   },
   methods:{
@@ -48,9 +46,12 @@ export default {
       this.students = students
     },
     testApiCall({ type, path, data }) {
-      const show = (apiCallResult) =>
-        alert(JSON.stringify(apiCallResult, null, 2))
-      
+      const show = (apiCallResult) => 
+        this.$router.push({ 
+          name: 'api',
+          params: { apiCallResult }
+        });
+
       switch(type){
         case 'post':
           this.$http.post(path, data).then(
@@ -84,6 +85,11 @@ export default {
   justify-content: center;
   align-items: center;
 }
+a{
+  color: black !important;
+  text-decoration: none;
+  margin: auto 20px;
+}
 .body{
   margin-top: 48px;
 }
@@ -91,10 +97,10 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  margin-bottom: 30px;
 }
-a{
-  color: black !important;
-  text-decoration: none;
-  margin: auto 20px;
+.nav-bar-api-btn{
+    background-color: #FEE140;
+    background-image: linear-gradient(90deg, #FA709A 0%, #FEE140 100%);
 }
 </style>

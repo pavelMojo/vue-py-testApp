@@ -64,13 +64,18 @@ export default {
     },
     methods:{
         onSubmit() {
-            const { type, login, password, setToken } = this;
-
+            const { type, login, password, setUser } = this;
             this.$http.post(type === 'Log in' ? api.login : api.register, { login, password }).then(
                 (response) => { 
                     const { body: { isSuccess, message, result  } } = response
-                    if(isSuccess && typeof(result) === 'string')
+                    if(isSuccess && typeof(result === 'object')) {
                         setUser(result)
+                        this.$router.push(name='/');
+                        // нужен ли тут return?
+                        debugger
+                        return
+                    }
+
                     this.error = message;
                     return;
                 },
@@ -89,12 +94,11 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px auto;
 }
 .user-form-card{
     width: 400px;
     border-radius: 2px 2px 10px 10px;
-	box-shadow: 5px 6px 18px -3px #777
+	box-shadow: 4px 6px 20px -5px #777
 }
 .user-form-baner{
     background-color: #FEE140;
