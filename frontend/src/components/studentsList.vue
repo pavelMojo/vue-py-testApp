@@ -107,7 +107,8 @@ export default {
         }
     }
 }
-// overwrite buildin style
+</style>
+<style  scoped>
 .list__tile{
     padding: 0;
 }
